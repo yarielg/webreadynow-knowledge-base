@@ -87,14 +87,11 @@ Never use without full verification:
 
 ### Safe to claim
 
-- WRN Hub is the license and update infrastructure for WebReadyNow plugins.
-- WebReadyNow issues and manages plugin license keys from webreadynow.com.
-- WebReadyNow plugin licenses can be activated, deactivated, and validated through the WebReadyNow license server.
+- WebReadyNow uses WRN Hub to manage licenses, updates, downloads, and documentation for its plugins.
 - Customers can view and copy their license keys from the WebReadyNow My Account area.
-- Active license holders can download the latest version of their plugin from My Account.
+- Active license holders can download their plugin from My Account.
 - WebReadyNow plugin documentation is available publicly at webreadynow.com/docs.
 - Documentation is searchable.
-- Documentation can be exported and imported between environments.
 - Subscription-based license status can sync with WooCommerce Subscriptions when configured.
 
 ### Unsafe — do not claim
@@ -105,7 +102,6 @@ Never use without full verification:
 - Downloads are fully protected against direct URL sharing.
 - License keys use cryptographically secure random generation.
 - WRN Hub provides customer support ticketing.
-- WRN Hub is a full customer-facing product portal.
 
 ---
 

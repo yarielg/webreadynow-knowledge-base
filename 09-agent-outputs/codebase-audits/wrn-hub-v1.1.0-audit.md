@@ -123,10 +123,9 @@ WRN Hub has customer-facing surfaces, but the plugin itself is internal admin in
 
 ## Recommended Next Agent
 
-**Product & Offer Alignment Agent** — to formally decide the positioning of WRN Hub relative to the plugin products it supports, and whether any infrastructure capability (e.g., licensing infrastructure) should become a positioned service offer.
+No agent alignment needed for WRN Hub itself. WRN Hub is definitively internal infrastructure — it is not a product to package, position, or sell.
 
-Load: `agents/product-offer-alignment-agent.md`
-Save output to: `09-agent-outputs/product-alignment/`
+If future work involves how WRN Hub's licensing or documentation capabilities relate to a specific plugin offer (e.g., WRN Store Monitor or WRN Pricing Rules Pro), that decision belongs in the Product & Offer Alignment session for the relevant plugin — not for WRN Hub as a standalone offer.
 
 ---
 
