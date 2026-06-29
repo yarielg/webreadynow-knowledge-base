@@ -124,6 +124,8 @@ Creates:
 - Email copy
 - Video scripts
 
+**Reusable prompt:** `agents/marketing-documentation-agent.md`
+
 **Output folder:** `09-agent-outputs/marketing-docs/`
 
 ---
