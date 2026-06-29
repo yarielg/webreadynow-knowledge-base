@@ -96,6 +96,8 @@ Use when deciding:
 - Offer Map (`04-offer-map.md`)
 - Relevant product or service context
 
+**Reusable prompt:** `agents/seo-content-decision-agent.md`
+
 **Output folder:** `09-agent-outputs/seo-decisions/`
 
 ---

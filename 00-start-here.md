@@ -33,6 +33,7 @@ Read these six files by default. Then read only the files the task requires.
 |---|---|
 | `agent-router.md` | Starting a new task type or unsure which agent to use |
 | `decision-record-template.md` | Creating a decision record for an important decision |
+| `agents/seo-content-decision-agent.md` | Running an SEO or content decision session — reusable agent prompt |
 | `06-products/wrn-store-monitor.md` | Working on WRN Store Monitor plugin, marketing, or monitoring service |
 | `06-products/wrn-pricing-rules.md` | Working on WRN Pricing Rules / Price List Manager |
 | `06-products/wrn-hub.md` | Working on WRN Hub |
