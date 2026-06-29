@@ -81,6 +81,34 @@ Never use without full verification:
 
 ---
 
+## WRN Hub — Safe Claims
+
+**Note:** WRN Hub is internal infrastructure installed only on webreadynow.com. It is not a standalone product. Claims below describe what WebReadyNow can say about its licensing and documentation systems — not about a product customers install.
+
+### Safe to claim
+
+- WRN Hub is the license and update infrastructure for WebReadyNow plugins.
+- WebReadyNow issues and manages plugin license keys from webreadynow.com.
+- WebReadyNow plugin licenses can be activated, deactivated, and validated through the WebReadyNow license server.
+- Customers can view and copy their license keys from the WebReadyNow My Account area.
+- Active license holders can download the latest version of their plugin from My Account.
+- WebReadyNow plugin documentation is available publicly at webreadynow.com/docs.
+- Documentation is searchable.
+- Documentation can be exported and imported between environments.
+- Subscription-based license status can sync with WooCommerce Subscriptions when configured.
+
+### Unsafe — do not claim
+
+- WRN Hub is available for customers to install.
+- WRN Hub is a standalone product.
+- License keys are emailed automatically after purchase.
+- Downloads are fully protected against direct URL sharing.
+- License keys use cryptographically secure random generation.
+- WRN Hub provides customer support ticketing.
+- WRN Hub is a full customer-facing product portal.
+
+---
+
 ## WRN Pricing Rules — Safe Claims
 
 - Supports wholesale pricing in WooCommerce
