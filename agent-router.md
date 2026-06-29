@@ -37,6 +37,8 @@ Use when exploring:
 - Pricing and positioning research
 - Industry patterns
 
+**Reusable prompt:** `agents/researcher-agent.md`
+
 **Output folder:** `09-agent-outputs/researcher/`
 
 ---
