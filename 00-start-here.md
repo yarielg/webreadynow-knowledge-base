@@ -16,12 +16,13 @@ A centralized Markdown knowledge base shared across all WebReadyNow Claude sessi
 
 | File | What It Contains |
 |---|---|
+| `agent-operating-rules.md` | Permanent operating rules for all sessions — load every time |
 | `01-core-context.md` | Agency identity, business model, what WebReadyNow sells |
 | `02-current-priorities.md` | What is being worked on right now |
 | `03-safe-claims.md` | What we can and cannot claim — global rules |
 | `04-offer-map.md` | All products, services, and offer models |
 
-Read only these four files by default. Then request additional files based on your task.
+Read these five files by default. Then request additional files based on your task.
 
 ---
 
@@ -42,14 +43,16 @@ Read only these four files by default. Then request additional files based on yo
 
 ## Agent Reading Matrix
 
-| Task | Core Files | Additional Files |
+Six agents operate inside this ecosystem. Each maps to a work type and a set of required files. See `agent-operating-rules.md` Section 9 for full agent definitions, triggers, and output folders.
+
+| Agent / Work Type | Core Files | Additional Files |
 |---|---|---|
-| SEO / Content Decision | 01, 02, 03, 04 | seo-decision-rules.md, content-inventory-summary.md, case-study-index.md, relevant product file |
-| Product / Plugin Work | 01, 02, 03, 04 | relevant product file, service-map.md |
-| Marketing / Documentation | 01, 03, 04 | relevant product file, case-study-index.md, service-map.md |
-| Service Page / Proposal | 01, 03, 04 | service-map.md, case-study-index.md |
-| Codebase Audit | 01, 03, 04 | relevant product file |
-| Client / Ops Delivery | 01, 04 | service-map.md |
+| Researcher Agent | 01, 02, 03, 04 | Relevant product or service file based on research scope |
+| Product & Offer Alignment Agent | 01, 03, 04 | relevant product file, offer-map.md, service-map.md |
+| Codebase Capability Auditor Agent | 01, 03, 04 | Relevant product file |
+| SEO & Content Decision Agent | 01, 02, 03, 04 | seo-decision-rules.md, content-inventory-summary.md, case-study-index.md, relevant product file |
+| Marketing & Documentation Agent | 01, 03, 04 | Relevant product file, case-study-index.md, service-map.md |
+| Ops / Client Delivery Agent | 01, 04 | service-map.md |
 
 ---
 
@@ -61,3 +64,8 @@ Read only these four files by default. Then request additional files based on yo
 4. Every feature, content piece, or service must connect to a WebReadyNow business goal.
 5. Check `03-safe-claims.md` before writing any product or service copy.
 6. Check `02-current-priorities.md` to understand where the business is right now.
+7. If a required file is missing, ask for it before making a final decision. Do not fill gaps with assumptions.
+8. At the end of every major task, state which KB files were affected and whether an update is needed.
+9. WebReadyNow is an agency first and a product builder second. Default to service framing unless the context is explicitly product-focused.
+
+See `agent-operating-rules.md` for the full rule set, work type classification, and KB update level system.
