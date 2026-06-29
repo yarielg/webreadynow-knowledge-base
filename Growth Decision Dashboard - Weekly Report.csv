@@ -1,0 +1,214 @@
+WebReadyNow Weekly Growth Report,
+Generated At,6/29/2026
+,
+KPI,Value
+GSC Clicks,57
+GSC Impressions,2425
+GSC CTR,2.35%
+GSC Avg Position,25.24627148
+GA4 Sessions,246
+GA4 Active Users,224
+,
+CTA / Conversion KPIs,Clicks
+Store Audit CTA Clicks,22
+Consultation CTA Clicks,7
+Care Plans CTA Clicks,0
+Service Landing CTA Clicks,1
+Care Plan Inquiry Clicks,0
+Contact CTA Clicks,2
+Case Study → Audit Clicks,1
+Case Study Hero Secondary CTA Clicks,0
+Total CTA / Conversion Events,33
+,
+Form Funnel KPIs,Events
+Lead Form Starts,2
+Lead Form Steps,8
+Lead Form Submit Success,2
+Form Start → Submit Gap,0
+,
+Newsletter KPIs,Events
+Newsletter Subscribes,0
+,
+Grouped Event Performance,Events
+CTA / Conversion Events,33
+Navigation Events,50
+Proof / Case Study Events,18
+Content Engagement Events,1
+Newsletter Signup Events,0
+Lead Form Events,12
+System / Direct Contact Events,13
+,
+Important Event Breakdown,Events
+store_audit_cta_click,22
+consultation_cta_click,7
+care_plans_cta_click,0
+service_landing_cta_click,1
+careplan_inquiry_click,0
+contact_cta_click,2
+case_study_to_audit_click,1
+cs_hero_cta2_click,0
+nav_service_click,49
+service_card_click,1
+case_study_click,13
+related_work_click,5
+case_study_archive_click,0
+related_insight_click,1
+newsletter_subscribe,0
+lead_form_start,2
+lead_form_step,8
+lead_form_submit_success,2
+mobile_menu_open,12
+email_click,1
+phone_click,0
+,
+Top GA4 Events by Count,Event Count
+page_view,515
+session_start,244
+user_engagement,220
+first_visit,205
+scroll,98
+nav_service_click,49
+store_audit_cta_click,22
+case_study_click,13
+mobile_menu_open,12
+lead_form_step,8
+form_start,7
+consultation_cta_click,7
+related_work_click,5
+click,3
+contact_cta_click,2
+cs_view_live_site,2
+lead_form_start,2
+lead_form_submit_success,2
+case_study_to_audit_click,1
+email_click,1
+,
+Top GA4 Events by Page,Event Count
+page_view — /,133
+session_start — /,91
+first_visit — /,73
+user_engagement — /,58
+page_view — /services/performance-checkout-rescue/,51
+session_start — /services/performance-checkout-rescue/,41
+first_visit — /services/performance-checkout-rescue/,40
+page_view — /store-audit/,30
+page_view — /case-studies/,25
+page_view — /care-optimization-plans/,24
+page_view — /contact/,21
+scroll — /,18
+page_view — /viaje-captiva/,17
+page_view — /insights/,16
+page_view — /woocommerce-developer-miami/,16
+scroll — /services/performance-checkout-rescue/,15
+user_engagement — /store-audit/,14
+case_study_click — /case-studies/,13
+nav_service_click — /,13
+page_view — /services/woocommerce-store-development/,12
+,
+Visibility by Page Group,Impressions
+Insight Article,692
+Landing Page,606
+Service Page,400
+Utility / Trust Page,257
+Case Study,132
+Homepage,117
+Unknown,76
+Insight Archive,58
+Spam URL,48
+Legacy URL,34
+Service Archive,5
+,
+Traffic by Page Group,GA4 Sessions
+Homepage,92
+Service Page,56
+Unknown,35
+Insight Article,18
+Utility / Trust Page,14
+Landing Page,13
+Case Study,12
+Insight Archive,2
+Legacy URL,2
+Spam URL,2
+,
+Top Service Pages by GSC Impressions,Impressions
+https://webreadynow.com/services/woocommerce-integrations/,199
+https://webreadynow.com/services/woocommerce-store-development/,49
+https://webreadynow.com/services/custom-plugins-features/,46
+https://webreadynow.com/services/,45
+https://webreadynow.com/services/ecommerce-automation/,39
+https://webreadynow.com/services/performance-checkout-rescue/,22
+,
+Top Landing Pages by GSC Impressions,Impressions
+https://webreadynow.com/care-optimization-plans/,335
+https://webreadynow.com/woocommerce-developer-miami/,193
+https://webreadynow.com/store-audit/,78
+,
+Top Case Studies by GSC Impressions,Impressions
+https://webreadynow.com/case-studies/,70
+https://webreadynow.com/case-studies/woocommerce-payment-diagnostics/,28
+https://webreadynow.com/case-studies/samurai-fireworks/,26
+https://webreadynow.com/case-studies/case-studies-woocommerce-price-list-manager-plugin/,3
+https://webreadynow.com/case-studies/quest-technology/,3
+https://webreadynow.com/case-studies/woocommerce-price-list-manager-plugin/,2
+,
+Top Insight Articles by GSC Impressions,Impressions
+https://webreadynow.com/why-woocommerce-inventory-sync-breaks-between-multiple-sales-channels/,207
+https://webreadynow.com/why-woocommerce-inventory-sync-problems-happen-between-systems/,153
+https://webreadynow.com/why-woocommerce-checkout-breaks-after-plugin-updates/,126
+https://webreadynow.com/woocommerce-erp-integration-what-to-decide-before-connecting-your-store/,83
+https://webreadynow.com/when-woocommerce-store-needs-custom-plugin-instead-of-extension/,53
+https://webreadynow.com/why-woocommerce-checkout-problems-are-hard-to-reproduce/,47
+https://webreadynow.com/before-connecting-woocommerce-to-an-erp-or-inventory-system-decide-which-system-is-in-charge/,23
+,
+Legacy URLs Still Visible,Impressions
+https://webreadynow.com/category/integrations/,25
+https://www.webreadynow.com/portfolio/,8
+https://www.webreadynow.com/blog/page/19/,1
+,
+Spam URLs Still Visible,Impressions
+https://www.webreadynow.com/casinova-deres-totale-guide-til-landets-svrt-spennende/,4
+https://www.webreadynow.com/betigma-your-premier-destination-for-remarkable-online-gaming-experience/,4
+https://www.webreadynow.com/hvilke-betaling-metode-lever-brukbar-atomnummer-85-sg8-kasino-21-casino-norway-join-the-action/,4
+https://www.webreadynow.com/utforska-nyaste-digitalt-spel-roulette-slottio-casino-se/,4
+https://www.webreadynow.com/betigma-din-egen-kompletta-vagledning-till-spelupplevelsen/,3
+https://www.webreadynow.com/kosta-hypebet-casino-licens-och-laga-bobby-casino-sverige-collect-bonus/,3
+https://www.webreadynow.com/morospin-casino-spitzenklasse-im-virtuellen-glucksspiel/,3
+https://www.webreadynow.com/representere-p-det-punktet-hva-som-helst-ulempe-med-7xm-casino-norge-join-the-action-casino-nine/,3
+https://www.webreadynow.com/beef-casino-review-unlock-huge-bonuses-and-top-14/,2
+https://www.webreadynow.com/dragonia-casino-din-egen-omfattende-guide-til-spennende-spillopplevelser/,2
+,
+High-Impression / Low-CTR Opportunities,CTR
+https://webreadynow.com/care-optimization-plans/,0
+https://webreadynow.com/why-woocommerce-inventory-sync-breaks-between-multiple-sales-channels/,0
+https://webreadynow.com/services/woocommerce-integrations/,0
+https://webreadynow.com/woocommerce-developer-miami/,0.00518134715
+https://webreadynow.com/why-woocommerce-inventory-sync-problems-happen-between-systems/,0.01307189542
+https://webreadynow.com/why-woocommerce-checkout-breaks-after-plugin-updates/,0.007936507937
+https://webreadynow.com/contact/,0
+https://webreadynow.com/woocommerce-erp-integration-what-to-decide-before-connecting-your-store/,0
+https://webreadynow.com/store-audit/,0.01282051282
+https://webreadynow.com/case-studies/,0.01428571429
+,
+Top GSC Queries by Impressions,Impressions
+woocommerce care plans,126
+woocommerce maintenance plan,109
+woocommerce integrations,52
+woocommerce integration,49
+woocommerce case study,28
+wordpress development miami,28
+woocommerce maintenance plans,27
+woocommerce store audit,21
+ecommerce development miami,20
+woocommerce erp integration,18
+,
+Decision Questions,Answer manually after review
+Which clean page is gaining visibility?,
+Which service page needs better CTR or internal links?,
+Which article should be updated or expanded?,
+Which legacy/spam URLs are still visible?,
+Which CTA/conversion path got engagement?,
+Which proof/case-study asset got engagement?,
+Which service path got navigation clicks?,
+Which form started but did not submit?,
+Which lead/pain point should affect content?,
+What is the one action for next week?,
