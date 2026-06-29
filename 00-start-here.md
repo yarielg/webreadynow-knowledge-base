@@ -16,13 +16,15 @@ A centralized Markdown knowledge base shared across all WebReadyNow Claude sessi
 
 | File | What It Contains |
 |---|---|
-| `agent-operating-rules.md` | Permanent operating rules for all sessions — load every time |
+| `agent-operating-rules.md` | How all agents must operate — load every time |
+| `agent-router.md` | Which agent to use and in what order |
+| `knowledge-base-update-rules.md` | When and how to update the knowledge base |
 | `01-core-context.md` | Agency identity, business model, what WebReadyNow sells |
 | `02-current-priorities.md` | What is being worked on right now |
 | `03-safe-claims.md` | What we can and cannot claim — global rules |
 | `04-offer-map.md` | All products, services, and offer models |
 
-Read these five files by default. Then request additional files based on your task.
+Read these seven files by default. Then read only the specific files needed for the task.
 
 ---
 
@@ -43,7 +45,7 @@ Read these five files by default. Then request additional files based on your ta
 
 ## Agent Reading Matrix
 
-Six agents operate inside this ecosystem. Each maps to a work type and a set of required files. See `agent-operating-rules.md` Section 9 for full agent definitions, triggers, and output folders.
+Six agents operate inside this ecosystem. Each maps to a work type and a set of required files. See `agent-router.md` for full agent definitions, triggers, output folders, and quick routing rules.
 
 | Agent / Work Type | Core Files | Additional Files |
 |---|---|---|
@@ -68,4 +70,18 @@ Six agents operate inside this ecosystem. Each maps to a work type and a set of 
 8. At the end of every major task, state which KB files were affected and whether an update is needed.
 9. WebReadyNow is an agency first and a product builder second. Default to service framing unless the context is explicitly product-focused.
 
-See `agent-operating-rules.md` for the full rule set, work type classification, and KB update level system.
+See `agent-operating-rules.md` for the full rule set and task classification system.
+
+---
+
+## Agent Governance
+
+Before running any important agent workflow, read:
+
+- `agent-operating-rules.md` — how all agents must operate
+- `agent-router.md` — which agent to use first and in what order
+- `knowledge-base-update-rules.md` — what files to update after a task
+
+Use `decision-record-template.md` when an important decision needs to be saved.
+
+Agents must not load the whole knowledge base by default. Read core files first, then only the files the task requires.
