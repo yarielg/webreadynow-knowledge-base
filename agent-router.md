@@ -75,6 +75,8 @@ Verifies each claim or feature as:
 - Service-required
 - Roadmap needed
 
+**Reusable prompt:** `agents/codebase-capability-auditor-agent.md`
+
 **Output folder:** `09-agent-outputs/codebase-audits/`
 
 ---
