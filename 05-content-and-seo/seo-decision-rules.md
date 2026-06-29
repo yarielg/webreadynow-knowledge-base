@@ -78,3 +78,24 @@ Strong angles for social:
 - Before rebuilding your WooCommerce store, audit the real problems first.
 
 Every piece of content should have a potential social angle identified before publishing.
+
+---
+
+## SEO Action Classification
+
+Use the lowest level that accurately captures the action. Do not update core knowledge base files for every small SEO action.
+
+### Level 1 — Tactical Change
+Single tactical change. One page. No new content. Title, meta, internal link, image alt, indexing check, or CTA tweak.
+
+**Tracking required:** Action Log only.
+
+### Level 2 — Page Optimization
+Page optimization. Affects one page and its related cluster. Title, meta, content, and internal links may be updated. No new content created and no offer or strategy change.
+
+**Tracking required:** Action Log + Content Inventory.
+
+### Level 3 — Strategic Change
+Strategic change. New page, new cluster, new offer, new content published, product/service positioning change, safe claim change, or multiple pages restructured.
+
+**Tracking required:** Action Log + Content Inventory + relevant knowledge base core/product/service files + decision record if needed.
