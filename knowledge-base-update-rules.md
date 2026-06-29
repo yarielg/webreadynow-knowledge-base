@@ -88,27 +88,13 @@ Use for:
 
 ## SEO-Specific Level Rules
 
-**Level 1:** Single tactical SEO change. One page. No new content. Title, meta, internal link, image alt, indexing check, or CTA tweak.
-Tracking required: Action Log only.
-
-**Level 2:** Page optimization. Affects one page and its related cluster. Title, meta, content, and internal links may be updated. No new content created and no offer or strategy change.
-Tracking required: Action Log + Content Inventory.
-
-**Level 3:** Strategic SEO change. New page, new cluster, new offer, new content published, product or service positioning change, safe claim change, or multiple pages restructured.
-Tracking required: Action Log + Content Inventory + relevant knowledge base files + decision record.
+For SEO-specific Level 1, 2, and 3 definitions, see `05-content-and-seo/seo-decision-rules.md`.
 
 ---
 
 ## Agent Ending Requirement
 
-At the end of any important task, agents must say:
-
-- Recommended update level
-- Files to update
-- Whether a decision record is needed
-- Whether the Action Log should be updated
-- Whether the Content Inventory should be updated
-- Whether Safe Claims, Offer Map, product files, or service files are affected
+For required end-of-task reporting, see `agent-operating-rules.md` (Ending Rule section).
 
 ---
 

@@ -10,17 +10,18 @@ This file defines how Claude sessions and WebReadyNow agents must operate across
 
 Agents must not load the entire knowledge base by default.
 
-For most sessions, read these files first:
+Always load these files first:
 
 - `00-start-here.md`
 - `01-core-context.md`
 - `02-current-priorities.md`
 - `03-safe-claims.md`
 - `04-offer-map.md`
-- `agent-router.md`
 - `knowledge-base-update-rules.md`
 
-Then read only the specific files needed for the task. See the Agent Reading Matrix in `00-start-here.md`.
+Then load only the files the task requires.
+
+Load `agent-router.md` only when starting a new task type or when the correct agent is unclear. Load `decision-record-template.md` only when creating a decision record.
 
 ---
 

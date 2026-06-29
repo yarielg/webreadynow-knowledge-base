@@ -17,21 +17,22 @@ A centralized Markdown knowledge base shared across all WebReadyNow Claude sessi
 | File | What It Contains |
 |---|---|
 | `agent-operating-rules.md` | How all agents must operate — load every time |
-| `agent-router.md` | Which agent to use and in what order |
-| `knowledge-base-update-rules.md` | When and how to update the knowledge base |
+| `knowledge-base-update-rules.md` | When and how to update the knowledge base — load every time |
 | `01-core-context.md` | Agency identity, business model, what WebReadyNow sells |
 | `02-current-priorities.md` | What is being worked on right now |
 | `03-safe-claims.md` | What we can and cannot claim — global rules |
 | `04-offer-map.md` | All products, services, and offer models |
 
-Read these seven files by default. Then read only the specific files needed for the task.
+Read these six files by default. Then read only the files the task requires.
 
 ---
 
-## Additional Files — Load Only When Needed
+## Conditional Files — Load Only When Needed
 
 | File | Load When |
 |---|---|
+| `agent-router.md` | Starting a new task type or unsure which agent to use |
+| `decision-record-template.md` | Creating a decision record for an important decision |
 | `06-products/wrn-store-monitor.md` | Working on WRN Store Monitor plugin, marketing, or monitoring service |
 | `06-products/wrn-pricing-rules.md` | Working on WRN Pricing Rules / Price List Manager |
 | `06-products/wrn-hub.md` | Working on WRN Hub |
@@ -58,30 +59,18 @@ Six agents operate inside this ecosystem. Each maps to a work type and a set of 
 
 ---
 
-## Key Rules for All Sessions
+## Key Rules
 
-1. Do not invent metrics, revenue figures, case study outcomes, or product capabilities that are not confirmed here.
-2. Use `TODO` where something needs confirmation before use.
-3. Do not publish service pages that imply defined delivery timelines or SOPs unless those SOPs exist.
-4. Every feature, content piece, or service must connect to a WebReadyNow business goal.
-5. Check `03-safe-claims.md` before writing any product or service copy.
-6. Check `02-current-priorities.md` to understand where the business is right now.
-7. If a required file is missing, ask for it before making a final decision. Do not fill gaps with assumptions.
-8. At the end of every major task, state which KB files were affected and whether an update is needed.
-9. WebReadyNow is an agency first and a product builder second. Default to service framing unless the context is explicitly product-focused.
+WebReadyNow is an agency first and product builder second. Do not invent metrics, claims, or capabilities. Check `03-safe-claims.md` before any copy is written.
 
-See `agent-operating-rules.md` for the full rule set and task classification system.
+For full agent behavior rules, see `agent-operating-rules.md`.
 
 ---
 
 ## Agent Governance
 
-Before running any important agent workflow, read:
+Core governance files are loaded every session: `agent-operating-rules.md` and `knowledge-base-update-rules.md`.
 
-- `agent-operating-rules.md` — how all agents must operate
-- `agent-router.md` — which agent to use first and in what order
-- `knowledge-base-update-rules.md` — what files to update after a task
+Load `agent-router.md` when starting a new task type or when the correct agent is unclear. Load `decision-record-template.md` only when creating a decision record.
 
-Use `decision-record-template.md` when an important decision needs to be saved.
-
-Agents must not load the whole knowledge base by default. Read core files first, then only the files the task requires.
+Agents must not load the whole knowledge base by default.
