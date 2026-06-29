@@ -21,6 +21,8 @@ Researcher Agent
 
 Not every task needs every agent. Use the Quick Routing Rules below to find the right starting point.
 
+When using an agent, load the matching prompt file from `agents/` instead of rewriting instructions manually.
+
 ---
 
 ## Agent 1 — Researcher Agent
