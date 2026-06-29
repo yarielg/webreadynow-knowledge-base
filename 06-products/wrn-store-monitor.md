@@ -8,7 +8,7 @@
 
 **Name:** WRN Store Monitor
 **Type:** WooCommerce monitoring and operational intelligence plugin
-**Current version:** 1.11.0
+**Current version:** 1.13.0
 **Distribution:** Paid plugin via WRN Hub (webreadynow.com). No WP.org free version.
 **Module:** Module 2 of the WebReadyNow WooCommerce Solution Suite
 
@@ -19,7 +19,8 @@
 ### Operations Dashboard
 - WooCommerce health overview with severity scoring (Good / Notice / Warning / Critical)
 - Health score (0–100) based on all monitor results
-- Scan history sparkline
+- Scan history sparkline and 30-day trend panel
+- Managed service handoff panel (appears when health < 70 or critical monitors exist)
 
 ### Monitors
 - Failed order detection
@@ -60,16 +61,23 @@
 - Failed alert notice in dashboard
 - Reset Alert Snapshot tool
 - Send Test Alert tool
+- Store priority routing: High/Critical stores prepend priority tag to alert email subjects
+
+### Diagnosis & Export
+- Incident Timeline tab — chronological feed of scans, events, and alerts (last 7 days)
+- Diagnostic Export — comprehensive JSON download (scan results, event log, alert history, probe states, environment)
+- AI Incident Summary — plain-English summary of active critical issues with business impact
+- Response Log — timestamped notes (disabled by default, opt-in in Settings)
 
 ### AI Advisor
 - AI-assisted diagnosis using store data (requires Anthropic API key)
 - Follow-up conversation per monitor
 - AI tools: read debug.log, read .htaccess, get WC logs, get active plugins, get store settings, get Action Scheduler jobs, get WC sessions, run SELECT-only DB queries
 - Session persistence per user per monitor
+- AI Incident Summary for critical states
 
 ### Admin Tools
-- Re-scan button on every monitor tab
-- Diagnostic export (TODO: Sprint 3)
+- Diagnostic Export (JSON) — for sending to WebReadyNow for remote diagnosis
 - Code Lab (custom PHP snippet runner with AI generation)
 
 ---
@@ -95,39 +103,40 @@
 
 ---
 
-## Roadmap
+## Roadmap Status
 
-### Sprint 1 — Checkout Health Upgrade (v1.10.0) — DONE
+### Sprint 1 — Checkout Health Upgrade (v1.10.0) — ✓ DONE
 - Cart page HTTP probe
 - WooCommerce AJAX probe
 - Order-received endpoint check
 - Continuous checkout probe (Action Scheduler)
 
-**Safe claim after Sprint 1:**
-WRN Store Monitor monitors key WooCommerce checkout health signals: checkout page availability, checkout response time, WooCommerce AJAX health, cart page availability, and order confirmation page availability.
-
-### Sprint 2 — Alert Reliability Upgrade (v1.11.0) — DONE
+### Sprint 2 — Alert Reliability Upgrade (v1.11.0) — ✓ DONE
 - Alert delivery logging
 - Alert History admin tab
 - Failed alert notice
-- Re-scan button
 - Alert diagnostic panel
 - Send Test Alert / Reset Snapshot tools
 
-**Safe claim after Sprint 2:**
-WRN Store Monitor records alert attempts, channels, severity, and delivery status so store owners and support teams can review what was sent and when.
-
-### Sprint 3 — Diagnosis Support Upgrade — NEXT
-- Incident timeline
-- Diagnostic export
+### Sprint 3 — Diagnosis Support Upgrade (v1.12.0) — ✓ DONE
+- Incident timeline tab
+- Diagnostic export (JSON)
 - AI incident summary
 - Managed service handoff panel
 
-### Sprint 4 — Managed Service Layer — PLANNED
-- Client status labels
-- Priority severity routing
-- Managed response notes
-- Escalation workflow
+### Sprint 4 — Managed Service Layer (v1.13.0) — ✓ DONE
+- Store priority routing (Normal / High / Critical)
+- Response log (opt-in)
+- Removed: client status dropdown and escalation workflow (rethinking service handoff approach)
+
+---
+
+## Pre-Release Blockers
+
+1. **License enforcement** — `WRNSM_License::is_valid()` is never called; hard blocker before selling
+2. **WRN Hub docs seeder** — needs full rewrite to reflect v1.10.0–1.13.0 features
+3. **WRN Proxy API** — replace direct Anthropic key with WRN-managed proxy (usage caps per license tier)
+4. **Landing page copy** — product page for webreadynow.com
 
 ---
 
@@ -140,16 +149,6 @@ WRN Store Monitor records alert attempts, channels, severity, and delivery statu
 - Action Scheduler for daily scans and continuous probe (group: `wrn-store-monitor`)
 - Scan results cached 5 min in `wrnsm_scan_results` transient
 - Alert snapshot in `wrnsm_alert_severity_snapshot` option (controls newly-critical detection)
-
----
-
-## Pre-Release Blockers
-
-- License enforcement — `WRNSM_License::is_valid()` is never called
-- WRN Hub docs seeder needs update for v1.10.0+ features
-- WRN Proxy API — replace direct Anthropic key with WRN-managed proxy
-- Landing page copy for webreadynow.com
-- Pattern-based severity threshold documentation
 
 ---
 
