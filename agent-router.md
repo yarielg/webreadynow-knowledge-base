@@ -144,6 +144,8 @@ Creates:
 - Monthly report templates
 - Client communication templates
 
+**Reusable prompt:** `agents/ops-client-delivery-agent.md`
+
 **Output folder:** `09-agent-outputs/ops-delivery/`
 
 ---

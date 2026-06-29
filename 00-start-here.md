@@ -37,6 +37,7 @@ Read these six files by default. Then read only the files the task requires.
 | `agents/product-offer-alignment-agent.md` | Running a product or offer alignment session — reusable agent prompt |
 | `agents/codebase-capability-auditor-agent.md` | Running a codebase capability audit — reusable agent prompt |
 | `agents/marketing-documentation-agent.md` | Writing marketing copy or documentation — reusable agent prompt |
+| `agents/ops-client-delivery-agent.md` | Designing service delivery, SOPs, or client ops assets — reusable agent prompt |
 | `agents/seo-content-decision-agent.md` | Running an SEO or content decision session — reusable agent prompt |
 | `06-products/wrn-store-monitor.md` | Working on WRN Store Monitor plugin, marketing, or monitoring service |
 | `06-products/wrn-pricing-rules.md` | Working on WRN Pricing Rules / Price List Manager |
