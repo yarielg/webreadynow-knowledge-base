@@ -56,6 +56,8 @@ Decides between:
 - Plugin plus managed service
 - Custom implementation
 
+**Reusable prompt:** `agents/product-offer-alignment-agent.md`
+
 **Output folder:** `09-agent-outputs/product-alignment/`
 
 ---
