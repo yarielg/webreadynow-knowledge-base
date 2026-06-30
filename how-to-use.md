@@ -4,6 +4,24 @@
 
 ---
 
+## The 6 Agents and What They Do
+
+| Agent | Prompt File | Use It When |
+|---|---|---|
+| **Researcher Agent** | `agents/researcher-agent.md` | You need to validate an idea, understand buyer pain, research competitors, or check if an opportunity is real before committing to it |
+| **Product & Offer Alignment Agent** | `agents/product-offer-alignment-agent.md` | You have a validated idea and need to decide how to package it — plugin, service, productized service, plugin + setup, or managed service |
+| **Codebase Capability Auditor Agent** | `agents/codebase-capability-auditor-agent.md` | You are about to add, update, or remove a plugin feature, or you need to verify what a plugin actually does before making any public claim |
+| **SEO & Content Decision Agent** | `agents/seo-content-decision-agent.md` | You need to decide what page to create, update, merge, promote, delay, or avoid — requires the Growth Dashboard export |
+| **Marketing & Documentation Agent** | `agents/marketing-documentation-agent.md` | You need to write a product page, service page, docs, FAQs, social posts, email copy, or any public-facing content — requires safe claims and a capability audit first |
+| **Ops / Client Delivery Agent** | `agents/ops-client-delivery-agent.md` | You need to turn a service offer into a real delivery system — SOPs, onboarding, support boundaries, proposal language, or client communication templates |
+
+**Flow order for new opportunities:**
+Researcher → Product & Offer Alignment → Codebase Capability Auditor → SEO & Content Decision → Marketing & Documentation → Ops / Client Delivery
+
+Not every task needs every agent. Start at the step that matches where you are.
+
+---
+
 ## Step 1 — Start Every Session the Same Way
 
 Paste this at the beginning of every Claude session, in any project:
