@@ -11,7 +11,7 @@
 | | WRN Store Monitor (Free) | WRN Store Monitor Pro |
 |---|---|---|
 | **Type** | WooCommerce basic detection/alerting plugin | WooCommerce monitoring and operational intelligence plugin |
-| **Current version** | Not yet built — TODO | 1.17.6 (implemented, tested; becomes Pro as-is) |
+| **Current version** | Not yet built — TODO | 1.17.7 (implemented, tested; becomes Pro as-is) |
 | **Distribution** | WordPress.org, self-serve, no license key | webreadynow.com, license-gated via WRN Hub |
 | **Role** | Acquisition + basic WooCommerce detection/alerting | Monetization + diagnosis + advanced monitoring |
 | **Requires the other plugin?** | No | No — standalone, not an add-on |
@@ -268,6 +268,16 @@ Locked 2026-07-01 — see `09-agent-outputs/product-alignment/wrn-store-monitor-
 - Response log (opt-in)
 - Removed: client status dropdown and escalation workflow (rethinking service handoff approach)
 
+### v1.17.7 — AI Onboarding and Support Offer UX — ✓ DONE, ✓ COMMITTED (2026-07-01, plugin repo commit `4914322`)
+- Launch-polish pass, not a feature sprint. Added an "Enable AI Diagnosis" prompt on Overview shown when `WRNSM_License::is_valid() && ! WRNSM_License::ai_available()` — a Pro license is active but no working Anthropic key is configured yet — explaining what AI unlocks and linking straight to the Settings API key field.
+- Fixed the AI Priority Report and AI Incident Summary render conditions on Overview: both previously rendered based on a saved API key alone, so they kept appearing (in a JS-disabled but visually-unstyled state) even after a license was deactivated. Both now require `is_valid() && ai_available()` together.
+- Root-caused and fixed the specific bug this caused: `.wrnsm-incident-summary-btn` had no `:disabled` CSS rule at all, so a JS-disabled button looked fully active and silently swallowed clicks. Added matching disabled styling (opacity + not-allowed cursor), same treatment the other two AI buttons already had.
+- Replaced the handoff panel's "Your store needs expert attention" / "requires human diagnosis and repair... WebReadyNow's WooCommerce experts" copy with calmer, developer-respectful language: "Need help interpreting this?" / "If your team wants a second opinion, you can export the diagnostic report or request help from WebReadyNow," plus a new line for developers about using the diagnostic export directly. Diagnostic Export button, Incident Summary button (now correctly gated), and the Managed Monitoring explanation were kept — the support path was not removed, only its tone. No new support CTA link was added, since no approved WebReadyNow support/contact URL exists anywhere in the codebase.
+- Added a one-line note in Settings → AI Advisor: "AI features also require an active WRN Store Monitor Pro license" — closes the gap where an unlicensed user could save a key and see a false "all set" confirmation.
+- Bonus fix found during the user's manual smoke test: `ajax_activate_license()`/`ajax_deactivate_license()` return the status message nested inside the AJAX response's `data` object, but `admin.js` was passing the whole object into the message display instead of `.message`, showing the literal string `"[object Object]"` under the Activate/Deactivate buttons on every use. Fixed both call sites.
+- Tested: PHP lint and JS syntax clean; manually smoke-tested end-to-end by the site owner across all four AI license/key states (no license; license, no key; license + key; license active-then-deactivated) plus the activate/deactivate message fix — all passed.
+- No license architecture, WRN Hub integration, AI proxy/credit system, or monitor behavior changed. Version bumped 1.17.6 → 1.17.7.
+
 ### v1.17.6 — License Validation Rejection Handling — ✓ DONE, ✓ COMMITTED (2026-07-01, plugin repo commit `41502fb`)
 - Fixed a WRN Hub compatibility bug found during the Pro Annual (BYOK) launch-readiness audit: `WRNSM_License::validate_with_server()` treated any non-200 HTTP response as "server unreachable" without ever reading the response body. WRN Hub returns HTTP 403 for real license rejection states (invalid, expired, suspended, revoked, not activated) — so a genuine rejection was misclassified as a temporary outage and could incorrectly fall back to the 7-day grace period.
 - Validation now parses the JSON body regardless of HTTP status. A body with a `success` key is treated as Hub's authoritative answer no matter the status code: `success:true` remains valid (unchanged); `success:false` is invalid immediately, with **no grace period** — this is a real rejection, not an outage.
@@ -367,13 +377,10 @@ Locked 2026-07-01 — see `09-agent-outputs/product-alignment/wrn-store-monitor-
 
 ## Pre-Release Blockers
 
-1. **License enforcement** — ✓ implemented in v1.17.4, ✓ closed the Slack/probe/failed-notice enforcement gap in v1.17.5, ✓ fixed WRN Hub 403-rejection handling in v1.17.6 (all committed, live-smoke-tested / mock-tested). The plugin-side code is done. What remains is WRN Hub server-side readiness, not plugin code:
-   - WRN Hub product record for slug `wrn-store-monitor` does not exist yet
-   - WooCommerce Annual BYOK product/subscription for sale does not exist yet
-   - Clean release ZIP/package workflow still needs to be built and confirmed — the current repo ships dev/internal files (`dev-run-tests.php`, `.idea/`, internal docs) in a plain `git archive` build (see Pro Annual BYOK launch-readiness audit)
-   - A live activation/validation/deactivation/update/download round-trip against real WRN Hub endpoints is still untested — the v1.17.6 fix was verified with mocked HTTP responses only, since this codebase can't reach the live Hub
-   - Version, download URL, and changelog must be seeded on Hub matching the actual shipped version (currently 1.17.6)
-   - Price points and WRN Hub license/plan objects for the three Pro SKUs (see decision record)
+1. **License enforcement** — ✓ implemented in v1.17.4, ✓ closed the Slack/probe/failed-notice enforcement gap in v1.17.5, ✓ fixed WRN Hub 403-rejection handling in v1.17.6, ✓ AI onboarding/support UX polish in v1.17.7 (all committed, tested). The plugin-side code is done.
+   - **Resolved — per owner confirmation, 2026-07-01** (server-side, not independently verifiable from this codebase): WRN Hub product record for slug `wrn-store-monitor` created; WooCommerce Annual BYOK product/subscription for sale created; clean release ZIP workflow built; a live activation/validation/deactivation/update/download round-trip against real WRN Hub endpoints has been run and tested.
+   - **Still open:** confirm the version/download URL/changelog seeded on Hub matches the actual shipped version (currently 1.17.7 — re-check this each time the version bumps); confirm the `wrn-store-monitor-1.17.6.zip` sitting in the plugin repo working directory is a real build artifact and reflects what's intended to ship (it predates the 1.17.7 bump).
+   - Price points and WRN Hub license/plan objects for the three Pro SKUs (see decision record) — status not reconfirmed this pass.
 2. **WRN Proxy API** — replace direct Anthropic key with WRN-managed proxy (usage caps per license tier); blocks Pro — Monthly and Pro — Managed; not required for Pro — Annual (BYOK)
 3. **Landing page copy** — product page for webreadynow.com; scope against the three Pro plans (Annual/Monthly/Managed), not a single flat offer
 4. **WRN Hub docs seeder** — needs full rewrite to reflect v1.15.0–1.17.0 features
@@ -382,7 +389,7 @@ Locked 2026-07-01 — see `09-agent-outputs/product-alignment/wrn-store-monitor-
 
 ## Next Sprint Roadmap
 
-**v1.17.2 through v1.17.6 are all committed.** License enforcement (v1.17.4), the Slack/probe/failed-notice enforcement gap (v1.17.5), and WRN Hub 403-rejection handling (v1.17.6) are all closed on the plugin-code side — see `09-agent-outputs/product-alignment/wrn-store-monitor-free-pro-commercial-structure.md` for the full commercial decision. Do not move to v1.18.0 (Sprint B) without a fresh scoping pass; v1.18.0 stays scoped to Sprint B as already planned below unless that pass changes it. The Free WordPress.org plugin is a **separate repository and version track**, starting at its own `v1.0.0` — it does not consume Pro's version numbers.
+**v1.17.2 through v1.17.7 are all committed.** License enforcement (v1.17.4–v1.17.6) and launch onboarding/support UX polish (v1.17.7) are all closed on the plugin-code side. Per owner confirmation, WRN Hub server-side setup (product record, WooCommerce Annual BYOK product, license/update/download flow) has also been created and tested — see `09-agent-outputs/product-alignment/wrn-store-monitor-free-pro-commercial-structure.md` for the full commercial decision. Do not move to v1.18.0 (Sprint B) without a fresh scoping pass; v1.18.0 stays scoped to Sprint B as already planned below unless that pass changes it. The Free WordPress.org plugin is a **separate repository and version track**, starting at its own `v1.0.0` — it does not consume Pro's version numbers.
 
 | Sprint | Version | Goal |
 |---|---|---|
@@ -391,11 +398,12 @@ Locked 2026-07-01 — see `09-agent-outputs/product-alignment/wrn-store-monitor-
 | — | v1.17.4 | Pro Packaging and License Gating — ✓ committed (`c0bb75e`) |
 | — | v1.17.5 | Launch UX and Notification Reliability — ✓ committed (`a63bb86`) |
 | — | v1.17.6 | License Validation Rejection Handling — ✓ committed (`41502fb`) |
+| — | v1.17.7 | AI Onboarding and Support Offer UX — ✓ committed (`4914322`) |
 | Sprint B | v1.18.0 (Pro) | Evidence UX — gateway health panel, guided investigation wizard, timeline correlation, plugin conflict indicator, version checker |
 | Sprint C | v1.19.0 (Pro) | Managed service handoff — escalation panel, evidence summary export, WRN Proxy AI, unblocks Pro — Monthly and Pro — Managed |
 | — | v1.0.0 (Free, separate repo) | Standalone WordPress.org Free plugin — TODO, not yet scoped |
 
-**Next step is not a version number — it's launch ops:** `WRN Hub Product Setup + Clean Release ZIP + Live License/Update Test`. All plugin-side license/notification/UX code needed for Pro Annual (BYOK) is done as of v1.17.6. What's left is server-side (WRN Hub product/plan/price records, seeded version/changelog/download) and packaging (a clean release ZIP workflow, then a real activation/validation/deactivation/update/download round-trip against live Hub) — see the Pre-Release Blockers list above for the itemized gaps. This is explicitly **not** more monitor/feature work and **not** product-page copy yet — both come after this phase.
+**Next step:** with plugin-code readiness (v1.17.4–v1.17.7) and owner-confirmed WRN Hub setup both in place, the remaining pre-launch items are: (1) reconfirm the Hub-seeded version/changelog/download match 1.17.7 specifically, (2) confirm price points and plan objects for the three Pro SKUs, (3) verify the actual release ZIP that will ship a customer is current and clean. After that, this is ready for first sale of **Pro — Annual (BYOK)**. This is explicitly **not** more monitor/feature work and **not** product-page copy yet.
 
 ---
 
