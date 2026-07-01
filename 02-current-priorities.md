@@ -50,7 +50,7 @@ Sprint 4 — Managed Service Layer — PLANNED
 WRN Store Monitor splits into two standalone plugins: **WRN Store Monitor (Free)** on WordPress.org and **WRN Store Monitor Pro** on webreadynow.com (the current advanced codebase becomes Pro as-is). Pro sells under three plans: **Pro — Annual** (BYOK Anthropic key, first sellable SKU), **Pro — Monthly** and **Pro — Managed** (both blocked on WRN Proxy API / AI metering). Full decision record: `09-agent-outputs/product-alignment/wrn-store-monitor-free-pro-commercial-structure.md`. Full feature split and roadmap detail: `06-products/wrn-store-monitor.md`.
 
 ### Pre-Release Blockers (WRN Store Monitor Pro)
-- License enforcement — `WRNSM_License::is_valid()` is never called; scoped into next version **v1.17.4 — Pro Packaging and License Gating**, not yet implemented
+- License enforcement — ✓ implemented and committed in **v1.17.4 — Pro Packaging and License Gating** (`c0bb75e`); remaining Slack/checkout-probe/failed-notice enforcement gap closed in **v1.17.5 — Launch UX and Notification Reliability** (`a63bb86`), both live-smoke-tested in-browser in unlicensed and licensed states
 - WRN Hub docs seeder rewrite — needs update for v1.10.0+ features
 - WRN Proxy API — replace direct Anthropic key with WRN-managed proxy; blocks Pro — Monthly and Pro — Managed only, not Pro — Annual
 - Landing page content — write webreadynow.com landing page copy, scoped against the three Pro plans

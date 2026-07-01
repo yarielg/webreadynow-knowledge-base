@@ -11,7 +11,7 @@
 | | WRN Store Monitor (Free) | WRN Store Monitor Pro |
 |---|---|---|
 | **Type** | WooCommerce basic detection/alerting plugin | WooCommerce monitoring and operational intelligence plugin |
-| **Current version** | Not yet built — TODO | 1.17.3 (implemented, smoke-tested; becomes Pro as-is) |
+| **Current version** | Not yet built — TODO | 1.17.5 (implemented, smoke-tested live in-browser; becomes Pro as-is) |
 | **Distribution** | WordPress.org, self-serve, no license key | webreadynow.com, license-gated via WRN Hub |
 | **Role** | Acquisition + basic WooCommerce detection/alerting | Monetization + diagnosis + advanced monitoring |
 | **Requires the other plugin?** | No | No — standalone, not an add-on |
@@ -54,6 +54,8 @@ Decided 2026-07-01. Full rationale in `09-agent-outputs/product-alignment/wrn-st
 | Store priority routing / managed-service handoff panel | No | Yes — license-gated, active on Pro — Managed |
 
 **License gating rule:** all Pro-only rows require `WRNSM_License::is_valid()` to be true. The three AI-cost rows (AI Advisor, AI Diagnosis, Code Lab) additionally require an AI-plan gate independent of license validity: valid license **plus** either a BYOK Anthropic key present (Pro — Annual) or WRN-managed AI credits available (Pro — Monthly / Pro — Managed, once metering exists).
+
+**Enforcement status (as of v1.17.5):** every row in this table is now actually code-enforced, not just documented intent. v1.17.4 enforced most of the table (monitors, Alert History UI, Diagnostic Export, AI features, tab locking). v1.17.5 closed the remaining gap: Slack/webhook alert dispatch, continuous checkout probe scheduling/execution, and the failed-alert notice banner were still firing regardless of license until v1.17.5 added the missing `WRNSM_License::is_valid()` checks to those three specific code paths.
 
 **Free/Pro coexistence:** if Free is active while Pro is active, Pro shows a persistent admin notice offering a one-click "Deactivate Free version" action (nonce + `activate_plugins` capability check). Pro must never auto-deactivate Free without explicit user action. Free and Pro use separate DB table prefixes, option names, and cron hook names so simultaneous activation cannot collide or fatal.
 
@@ -266,13 +268,26 @@ Locked 2026-07-01 — see `09-agent-outputs/product-alignment/wrn-store-monitor-
 - Response log (opt-in)
 - Removed: client status dropdown and escalation workflow (rethinking service handoff approach)
 
-### v1.17.4 — Pro Packaging and License Gating — PLANNED (decided 2026-07-01, not yet implemented)
-- Gate the Pro-only feature list (see Free vs. Pro Feature Split table above) using `WRNSM_License::is_valid()`; show a clear "License required" state per feature/tab rather than a silent failure.
-- Add an AI-plan gate independent of license validity: valid license **plus** either a BYOK Anthropic key present (Pro — Annual) or WRN-managed AI credits available (Pro — Monthly / Managed, once metering exists).
-- Add a Free-plugin-detection admin notice with a one-click "Deactivate Free version" action (nonce + `activate_plugins` capability check) — no auto-deactivation.
-- Ensure Pro's DB table prefixes, option names, and cron hook names cannot collide with a future Free plugin.
-- Prepare Pro to run standalone (no dependency on a Free install).
-- Explicitly out of scope: building the Free WordPress.org plugin itself, building the WRN Proxy API. Do not move to v1.18.0 as part of this work.
+### v1.17.5 — Launch UX and Notification Reliability — ✓ DONE, ✓ COMMITTED (2026-07-01, plugin repo commit `a63bb86`)
+- **Notification boundary fixes** — closed a gap where v1.17.4 documented Slack alerts, the continuous checkout probe, and the failed-alert notice as Pro-only but the code didn't actually enforce it yet:
+  - Slack/webhook alert dispatch (`class-wrnsm-alert-manager.php`, 3 call sites) now requires `WRNSM_License::is_valid()`. Email alerts remain unconditional — Free baseline, unchanged.
+  - Continuous checkout probe scheduling and execution (`class-wrnsm-checkout-prober.php`) now require a valid license. The basic on-scan checkout config check (HTTPS, order-received reachability) stays Free, untouched.
+  - The "Alert delivery problem detected" banner is now license-gated.
+- **Navigation UX** — sidebar reorganized into three groups: Monitors and Admin (free tabs only) come first, Pro Features is a separate, always-last group. Locked tabs stay clickable — no JS routing or click interception added — but now show dimmed styling and a lock badge (🔒) instead of looking identical to working tabs.
+- **Locked-state copy** — shared `license-locked.php` partial now uses one consistent structure everywhere: title "Unlock WRN Store Monitor Pro", fixed body copy, "Go to Settings" CTA, and a secondary "Already entered a license? Refresh this page or run a license check." line. Mixed-tab locks (Activity, Reports) keep their one-line context sentence but follow the same structure.
+- **License cache correctness** — `WRNSM_License::activate()`/`activate_test_key()`/`deactivate()` now flush the per-request `is_valid()` cache on state change, so license changes are reflected immediately within the same PHP process instead of only after a fresh request. Surfaced by testing the new checkout-probe gating (reads `is_valid()` during `init`, earlier than any prior call site) — confirmed via same-process WP-CLI test (activate → `is_valid()` YES → deactivate → `is_valid()` NO, no restart needed).
+- Live-smoke-tested: unlicensed and licensed states, real Slack webhook delivery (posted to the store's actual configured webhook), real checkout-probe HTTP execution via WP-CLI, full browser verification of nav/copy/gating in both states.
+- No new monitors, no Free plugin, no WRN Proxy API, no v1.18.0 scope touched, license gating architecture unchanged from v1.17.4.
+
+### v1.17.4 — Pro Packaging and License Gating — ✓ DONE, ✓ COMMITTED (2026-07-01, plugin repo commit `c0bb75e`)
+- `WRNSM_License::ai_available()` added: valid license **and** a way to pay for AI. Today that's BYOK only (Pro — Annual); the WRN-managed-credits branch is stubbed `false` pending v1.19.0/WRN Proxy API.
+- Pro-only monitors (`silent_gateway_failure`, `missing_payment_meta`, `duplicate_charge_risk`, `stuck_payment_candidate`, `customer_risk`, `subscriptions`, `store_performance`) stripped from scan results via the existing `wrnsm_monitors` filter when unlicensed — core scan logic untouched.
+- 18 server-side gate insertions across admin-post/AJAX handlers: license-only gates on Diagnostic Export, Diagnosis payload build/export, Alert Snapshot/Test Alert tools, Response Notes, Code Lab snippet toggle/delete; AI-cost gates (`ai_available()`) on Incident Summary, AI Diagnosis, per-monitor Diagnose, Global Priority Report, Code Lab generation, follow-up chat, order analysis.
+- Locked-state UI: new reusable `admin/views/partials/license-locked.php`. Payment, Subscriptions, Customer Risk, Performance, Diagnosis, and Code Lab tabs show the locked partial when unlicensed. Activity (Incident Timeline + Alert Delivery History locked, Raw Event Log stays free) and Reports (Diagnostic Export locked, CSV/JSON stays free) are gated section-by-section, not whole-tab.
+- Free-plugin-detection admin notice + one-click, nonce-protected "Deactivate Free version" action — never auto-deactivates. Basename is a documented placeholder pending the actual Free plugin repo.
+- Overview AI Priority Report made collapsible (was taking the full page by default) — added to this pass as a small UX fix, doesn't change commercial scope. Known minor follow-up (not blocking): the summary chip can show "Not generated yet" while stale cached content still displays in the expanded body — pre-existing cache logic.
+- Confirmed live (real WordPress/WooCommerce, both unlicensed and licensed-via-test-key states): free-tier baseline stays fully functional unlicensed, `payment_failures` correctly surfaces in the unlocked Orders tab despite the Payment tab itself being fully Pro-locked, AI gating correctly distinguishes "no license" vs. "no API key" vs. both, a real AI call succeeds once license+key are both present, Free-plugin notice/deactivate works end-to-end.
+- Explicitly out of scope, not built in this pass: the Free WordPress.org plugin itself, the WRN Proxy API / AI credit metering. Did not move to v1.18.0.
 
 ### v1.17.3 — Release Candidate Readiness & UX Positioning — ✓ DONE, ✓ COMMITTED (2026-07-01, plugin repo commit "v1.17.3 mark Code Labs beta and improve evidence status messaging")
 - Code Labs UI marked Beta/Experimental: sidebar label "Code Lab — Beta", updated generate-box description, amber warning above generated code ("Experimental code assistance. Always review, test on staging, and back up your site before using generated snippets."). Feature not removed, not marketed as automatic fixing, no follow-up/context memory added.
@@ -343,7 +358,7 @@ Locked 2026-07-01 — see `09-agent-outputs/product-alignment/wrn-store-monitor-
 
 ## Pre-Release Blockers
 
-1. **License enforcement** — `WRNSM_License::is_valid()` is never called; scoped into v1.17.4, not yet implemented; hard blocker before selling
+1. **License enforcement** — ✓ implemented in v1.17.4, ✓ closed the remaining Slack/probe/failed-notice enforcement gap in v1.17.5 (both committed, live-smoke-tested). Remaining before selling: price points and WRN Hub license/plan objects for the three Pro SKUs (see decision record).
 2. **WRN Proxy API** — replace direct Anthropic key with WRN-managed proxy (usage caps per license tier); blocks Pro — Monthly and Pro — Managed; not required for Pro — Annual (BYOK)
 3. **Landing page copy** — product page for webreadynow.com; scope against the three Pro plans (Annual/Monthly/Managed), not a single flat offer
 4. **WRN Hub docs seeder** — needs full rewrite to reflect v1.15.0–1.17.0 features
@@ -352,13 +367,14 @@ Locked 2026-07-01 — see `09-agent-outputs/product-alignment/wrn-store-monitor-
 
 ## Next Sprint Roadmap
 
-**v1.17.2 and v1.17.3 are both committed.** v1.17.4 (Pro Packaging and License Gating) is next and is the immediate blocker before any paid release — see `09-agent-outputs/product-alignment/wrn-store-monitor-free-pro-commercial-structure.md` for the full commercial decision. Do not move to v1.18.0 (Sprint B) without a fresh scoping pass; v1.18.0 stays scoped to Sprint B as already planned below unless that pass changes it. The Free WordPress.org plugin is a **separate repository and version track**, starting at its own `v1.0.0` — it does not consume Pro's version numbers.
+**v1.17.2 through v1.17.5 are all committed.** License enforcement (v1.17.4) and its remaining Slack/probe/failed-notice enforcement gap (v1.17.5) are both closed — see `09-agent-outputs/product-alignment/wrn-store-monitor-free-pro-commercial-structure.md` for the full commercial decision. Do not move to v1.18.0 (Sprint B) without a fresh scoping pass; v1.18.0 stays scoped to Sprint B as already planned below unless that pass changes it. The Free WordPress.org plugin is a **separate repository and version track**, starting at its own `v1.0.0` — it does not consume Pro's version numbers.
 
 | Sprint | Version | Goal |
 |---|---|---|
 | — | v1.17.2 | Centralized AI Plumbing and Safety Alignment — ✓ committed |
 | — | v1.17.3 | Release Candidate Readiness & UX Positioning — ✓ committed |
-| — | v1.17.4 | Pro Packaging and License Gating — planned, next up |
+| — | v1.17.4 | Pro Packaging and License Gating — ✓ committed (`c0bb75e`) |
+| — | v1.17.5 | Launch UX and Notification Reliability — ✓ committed (`a63bb86`) |
 | Sprint B | v1.18.0 (Pro) | Evidence UX — gateway health panel, guided investigation wizard, timeline correlation, plugin conflict indicator, version checker |
 | Sprint C | v1.19.0 (Pro) | Managed service handoff — escalation panel, evidence summary export, WRN Proxy AI, unblocks Pro — Monthly and Pro — Managed |
 | — | v1.0.0 (Free, separate repo) | Standalone WordPress.org Free plugin — TODO, not yet scoped |
