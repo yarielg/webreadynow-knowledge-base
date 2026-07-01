@@ -8,7 +8,7 @@
 
 **Name:** WRN Store Monitor
 **Type:** WooCommerce monitoring and operational intelligence plugin
-**Current version:** 1.17.0
+**Current version:** 1.17.1
 **Distribution:** Paid plugin via WRN Hub (webreadynow.com). No WP.org free version.
 **Module:** Module 2 of the WebReadyNow WooCommerce Solution Suite
 
@@ -104,7 +104,7 @@
 
 **`WRNSM_Gateway_Registry`** — static registry of ~45 known payment gateway IDs
 - Covers: WooPayments, Stripe (official + Payment Plugins), PayPal PPCP, Square, Authorize.Net, Braintree, Amazon Pay, Klarna, Affirm, Afterpay, BACS, COD, Cheque
-- `is_known_payment_gateway(id)` — used by checkout monitor and Tool 1/3 to detect non-payment methods in gateway list
+- `is_known(id)` — used by checkout monitor and Tool 1/3 to detect non-payment methods in gateway list
 
 **Diagnostic Payload (v1.16.1–1.16.2)**
 - Payload now includes: event aggregates, payment health (7d), checkout probe state, top checkout errors (7d)
@@ -124,7 +124,7 @@
 - Block checkout MutationObserver debounced 600ms + visibility check — eliminates false positives from React hydration transient states
 
 ### Checkout Configuration Monitor (v1.17.0 additions)
-- Detects unrecognized gateway IDs via `WRNSM_Gateway_Registry::is_known_payment_gateway()`
+- Detects unrecognized gateway IDs via `WRNSM_Gateway_Registry::is_known()`
 - Detects non-payment methods (shipping/pickup classes) registered in the payment gateway list
 - Fires `warning` when either is found; includes gateway class name in meta
 - `invalid_gateway_ids` and `non_payment_in_list` added to monitor meta
@@ -216,6 +216,11 @@
 - Response log (opt-in)
 - Removed: client status dropdown and escalation workflow (rethinking service handoff approach)
 
+### v1.17.1 — Evidence Intelligence Stabilization — ✓ DONE, ✓ COMMITTED (2026-07-01, plugin repo commit `8424862`)
+- Deepen Evidence panel no longer renders raw tool output (order IDs, error text, AS counts) to the store owner — replaced with a plain tool-count confirmation, matching the "AI input, not user-facing" architecture rule
+- `generate_enriched()` truncation bug fixed — base payload cap now sized around the evidence section so the full 20,000-char enriched budget is used, not silently capped at 12,000
+- `WRNSM_Evidence_Tools::gather_all()` now fault-isolates each of the 9 tools individually — one failing tool degrades gracefully instead of aborting the whole evidence-gathering request
+
 ### v1.17.0 — Controlled Evidence Layer — ✓ DONE
 - `WRNSM_Gateway_Registry` — static registry of ~45 known gateway IDs
 - `WRNSM_Evidence_Tools` — 9 controlled read-only tools, `gather_all()` aggregate method
@@ -271,8 +276,13 @@
 
 ## Next Sprint Roadmap
 
+**Immediate next release: v1.17.2 — Centralized AI Plumbing and Safety Alignment.** Committed scope, not deferred/optional — see `PROJECT_NOTES.md` in the plugin repo for full detail. Triggered by a 2026-07-01 architecture audit that found 6 sibling AI classes with no shared core (7 independent Anthropic API call implementations, 6 drifting system prompts, 4 independent JSON parsers) and a live safety-posture conflict: `WRNSM_AI_Tools::run_db_query()` still allows AI-authored free-form SQL in the follow-up chat, contradicting the "AI never accesses the DB directly" rule that `WRNSM_Evidence_Tools` (v1.17.0) was built to enforce. Priority order: (1) retire/replace `run_db_query()`, (2) add `WRNSM_AI_Client` shared API-call layer, (3) add `WRNSM_AI_Response_Parser` shared JSON-salvage layer, (4) consistent task types (`priority_report`, `incident_summary`, `monitor_diagnosis`, `deep_diagnosis`, `snippet_generation`, `snippet_review`, `snippet_followup`) across AI Feedback and cost tracking, (5) feature-specific prompt building stays inside each feature class. Explicitly scoped as a small plumbing/safety pass — not a full AI rewrite, not a single merged prompt system. Code Labs snippet follow-up context is reviewed separately, inside v1.17.2 if scope allows or pushed to v1.17.3.
+
+**Do not move to v1.18.0 (Sprint B) until v1.17.2 is complete.** The AI centralization and `run_db_query()` safety alignment is a committed decision, not optional or deferred indefinitely.
+
 | Sprint | Version | Goal |
 |---|---|---|
+| — | v1.17.2 | Centralized AI Plumbing and Safety Alignment (see above) — next up, blocks v1.18.0 |
 | Sprint B | v1.18.0 | Evidence UX — gateway health panel, guided investigation wizard, timeline correlation, plugin conflict indicator, version checker |
 | Sprint C | v1.19.0 | Managed service handoff — escalation panel, evidence summary export, WRN Proxy AI, license gate |
 
