@@ -45,6 +45,23 @@ Never use without full verification:
 
 ## WRN Store Monitor — Safe Claims
 
+### Free/Pro Commercial Structure (decided 2026-07-01)
+
+WRN Store Monitor is two standalone plugins, not one plugin with a paywall. Full decision record: `09-agent-outputs/product-alignment/wrn-store-monitor-free-pro-commercial-structure.md`.
+
+**Safe to claim:**
+- WRN Store Monitor is free to install from WordPress.org and helps detect WooCommerce operational issues out of the box.
+- WRN Store Monitor Pro adds continuous checkout monitoring, Slack alerting, alert reliability logging, and AI-assisted diagnosis.
+- WRN Store Monitor Pro — Annual lets store owners bring their own Anthropic API key. *(Accurate today — matches current `WRNSM_AI_Client` behavior.)*
+- WRN Store Monitor Pro — Monthly and Pro — Managed include a WebReadyNow-managed AI usage allowance. *(Only once WRN Proxy API / AI credit metering ships and a usage cap is defined — not before.)*
+- WRN Store Monitor Pro — Managed includes WebReadyNow review of Pro alerts as part of Managed WooCommerce Monitoring. *(Already an approved existing service claim — see Managed WooCommerce Monitoring below.)*
+
+**Unsafe — do not claim:**
+- AI credits are "unlimited" or "included" on any plan before WRN Proxy API and a defined usage cap exist.
+- The Free plugin is a trial, demo, or limited-time version — it must be positioned as permanently and genuinely useful on its own, not a crippled path to Pro.
+- Free/Pro conflict prevention is fully automatic — the actual mechanism is a persistent admin notice plus a one-click, user-initiated "Deactivate Free version" action; Pro never auto-deactivates Free.
+- WRN Store Monitor Pro requires the Free plugin to be installed — Pro is standalone.
+
 ### Safe to claim today
 
 - WRN Store Monitor helps detect WooCommerce operational issues earlier.

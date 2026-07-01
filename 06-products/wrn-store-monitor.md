@@ -6,15 +6,62 @@
 
 ## Product Identity
 
-**Name:** WRN Store Monitor
-**Type:** WooCommerce monitoring and operational intelligence plugin
-**Current version:** 1.17.1
-**Distribution:** Paid plugin via WRN Hub (webreadynow.com). No WP.org free version.
-**Module:** Module 2 of the WebReadyNow WooCommerce Solution Suite
+**Commercial structure (decided 2026-07-01 — see `09-agent-outputs/product-alignment/wrn-store-monitor-free-pro-commercial-structure.md`):** Two standalone plugins, not one plugin with a paywall.
+
+| | WRN Store Monitor (Free) | WRN Store Monitor Pro |
+|---|---|---|
+| **Type** | WooCommerce basic detection/alerting plugin | WooCommerce monitoring and operational intelligence plugin |
+| **Current version** | Not yet built — TODO | 1.17.3 (implemented, smoke-tested; becomes Pro as-is) |
+| **Distribution** | WordPress.org, self-serve, no license key | webreadynow.com, license-gated via WRN Hub |
+| **Role** | Acquisition + basic WooCommerce detection/alerting | Monetization + diagnosis + advanced monitoring |
+| **Requires the other plugin?** | No | No — standalone, not an add-on |
+| **AI** | None | AI Advisor, AI Diagnosis, Code Lab (plan-gated) |
+
+**Module:** Module 2 of the WebReadyNow WooCommerce Solution Suite (Pro)
+
+---
+
+## Free vs. Pro Feature Split
+
+Decided 2026-07-01. Full rationale in `09-agent-outputs/product-alignment/wrn-store-monitor-free-pro-commercial-structure.md`.
+
+**Principle:** Free = passive detection and alerting only — needs no WebReadyNow infrastructure to run forever, satisfies WordPress.org's "genuinely useful, not a crippled trial" requirement. Pro = active/continuous monitoring, reliability infrastructure, and anything involving AI — i.e. everything that costs WebReadyNow engineering upkeep or API spend.
+
+| Capability | Free (WP.org) | Pro (webreadynow.com) |
+|---|---|---|
+| Failed / stuck order detection | Yes | Yes |
+| Payment failure pattern detection | Yes | Yes |
+| Inventory / stock issue detection | Yes | Yes |
+| Environment diagnostics (PHP/WC/WP/SSL) | Yes | Yes |
+| HPOS compatibility status | Yes | Yes |
+| Email deliverability check | Yes | Yes |
+| Basic checkout config check (HTTPS, order-received reachability, on-scan only) | Yes | Yes |
+| Health score dashboard (0–100) | Yes | Yes |
+| Daily scheduled scan + manual scan | Yes | Yes |
+| Event log | Yes (short retention) | Yes (full retention, higher daily caps) |
+| Email alerts | Yes | Yes |
+| Silent gateway failure / duplicate charge risk / missing payment metadata / stuck payment candidate monitors | No | Yes — license-gated |
+| Customer risk scoring | No | Yes — license-gated |
+| WooCommerce Subscriptions monitoring | No | Yes — license-gated |
+| Continuous checkout probe, cart probe, wc-ajax probe, response-time trending | No | Yes — license-gated |
+| Slack/webhook alerts, Alert History, alert delivery logging, failed-alert notice, re-scan tools | No | Yes — license-gated |
+| Incident Timeline | No | Yes — license-gated |
+| Diagnostic Payload Builder + Diagnostic Export (JSON) | No | Yes — license-gated |
+| AI Advisor (Haiku, monitor-level) | No | Yes — license-gated + AI-plan-gated |
+| AI Diagnosis (Sonnet, wizard + Deepen Evidence + 9 evidence tools) | No | Yes — license-gated + AI-plan-gated |
+| Code Lab (AI snippet generator, beta) | No | Yes — license-gated + AI-plan-gated |
+| Response Log | No | Yes — license-gated |
+| Store priority routing / managed-service handoff panel | No | Yes — license-gated, active on Pro — Managed |
+
+**License gating rule:** all Pro-only rows require `WRNSM_License::is_valid()` to be true. The three AI-cost rows (AI Advisor, AI Diagnosis, Code Lab) additionally require an AI-plan gate independent of license validity: valid license **plus** either a BYOK Anthropic key present (Pro — Annual) or WRN-managed AI credits available (Pro — Monthly / Pro — Managed, once metering exists).
+
+**Free/Pro coexistence:** if Free is active while Pro is active, Pro shows a persistent admin notice offering a one-click "Deactivate Free version" action (nonce + `activate_plugins` capability check). Pro must never auto-deactivate Free without explicit user action. Free and Pro use separate DB table prefixes, option names, and cron hook names so simultaneous activation cannot collide or fatal.
 
 ---
 
 ## What It Does (Verified Capabilities)
+
+**Note:** the capabilities below describe the current codebase, which becomes **WRN Store Monitor Pro** in full. See the Free vs. Pro Feature Split table above for which of these ship in the Free WordPress.org plugin (not yet built) versus which are license-gated Pro-only.
 
 ### Operations Dashboard
 - WooCommerce health overview with severity scoring (Good / Notice / Warning / Critical)
@@ -182,11 +229,14 @@
 
 ## Offer Models
 
+Locked 2026-07-01 — see `09-agent-outputs/product-alignment/wrn-store-monitor-free-pro-commercial-structure.md` for full decision record.
+
 | Model | What's Included | Status |
 |---|---|---|
-| Plugin-only | License + self-serve install | Pre-release |
-| Plugin + Setup | License + WebReadyNow configuration session | TODO — define scope |
-| Managed Monitoring | License + monthly WebReadyNow alert review and diagnosis | TODO — define SLA |
+| WRN Store Monitor (Free) | WordPress.org install, no license key, no AI | TODO — plugin not yet built |
+| WRN Store Monitor Pro — Annual | Pro plugin + license (WRN Hub) + BYOK Anthropic key | **First sellable SKU** — requires only license gating (v1.17.4), no new AI infra |
+| WRN Store Monitor Pro — Monthly | Pro plugin + license + WebReadyNow-managed AI usage allowance | Blocked — needs WRN Proxy API / AI credit metering |
+| WRN Store Monitor Pro — Managed | Pro — Monthly plan + Managed WooCommerce Monitoring (monthly WebReadyNow alert review and diagnosis) | Blocked — needs WRN Proxy API / AI metering AND a defined Managed Monitoring SLA |
 
 ---
 
@@ -215,6 +265,30 @@
 - Store priority routing (Normal / High / Critical)
 - Response log (opt-in)
 - Removed: client status dropdown and escalation workflow (rethinking service handoff approach)
+
+### v1.17.4 — Pro Packaging and License Gating — PLANNED (decided 2026-07-01, not yet implemented)
+- Gate the Pro-only feature list (see Free vs. Pro Feature Split table above) using `WRNSM_License::is_valid()`; show a clear "License required" state per feature/tab rather than a silent failure.
+- Add an AI-plan gate independent of license validity: valid license **plus** either a BYOK Anthropic key present (Pro — Annual) or WRN-managed AI credits available (Pro — Monthly / Managed, once metering exists).
+- Add a Free-plugin-detection admin notice with a one-click "Deactivate Free version" action (nonce + `activate_plugins` capability check) — no auto-deactivation.
+- Ensure Pro's DB table prefixes, option names, and cron hook names cannot collide with a future Free plugin.
+- Prepare Pro to run standalone (no dependency on a Free install).
+- Explicitly out of scope: building the Free WordPress.org plugin itself, building the WRN Proxy API. Do not move to v1.18.0 as part of this work.
+
+### v1.17.3 — Release Candidate Readiness & UX Positioning — ✓ DONE, ✓ COMMITTED (2026-07-01, plugin repo commit "v1.17.3 mark Code Labs beta and improve evidence status messaging")
+- Code Labs UI marked Beta/Experimental: sidebar label "Code Lab — Beta", updated generate-box description, amber warning above generated code ("Experimental code assistance. Always review, test on staging, and back up your site before using generated snippets."). Feature not removed, not marketed as automatic fixing, no follow-up/context memory added.
+- Deep Evidence honesty fix: `handle_gather_evidence()` now returns `tools_total`/`tools_succeeded`/`tools_failed`; the Deepen Evidence success message no longer claims a static "9 diagnostic tools" — it now reflects actual tool outcomes (e.g. "7 of 9 diagnostic tools (2 unavailable)"), closing a gap left by v1.17.1's tool fault isolation.
+- Reviewed release-facing copy (Overview, Diagnosis, Code Labs) and AI empty/error states against the product promise (detect → AI-assisted diagnosis → evidence-aware explanation → prioritized next actions) — no other copy changes needed.
+- Removed three untracked scratch files from the plugin repo (`scripts/test-shot.js`, `scripts/package-lock.json`, `scripts/delete-transients.php`) — dev/ops scaffolding that wasn't gitignored and shouldn't ship in a release zip.
+- No new monitors, no service sales copy added, Code Labs not positioned as the main product promise, no move to v1.18.0.
+
+### v1.17.2 — Centralized AI Plumbing and Safety Alignment — ✓ DONE, ✓ COMMITTED (2026-07-01, plugin repo commit `e79334e`)
+- `WRNSM_AI_Client` — single shared Anthropic API call, replacing 7 independent `wp_remote_post()` implementations across `AI_Advisor`, `AI_Diagnosis`, `AI_Snippet_Generator`
+- `WRNSM_AI_Response_Parser` — single shared 4-tier JSON salvage parser, replacing 4 independent parsers
+- `WRNSM_AI_Tools::run_db_query()` retired — removed from `get_definitions()` and `execute()` dispatch; AI can no longer author free-form SQL in the follow-up chat. Implementation kept (commented, unreachable) for reference pending a possible narrow-tool replacement in v1.17.3
+- Task types standardized at the client layer: `priority_report`, `incident_summary` (newly wired into feedback — previously had none), `monitor_diagnosis`, `deep_diagnosis`, `diagnosis`, `snippet_generation`
+- `WRNSM_AI_Feedback` cost/tooltip now model-aware (`MODEL_PRICING` map) instead of hardcoded to Haiku pricing
+- Code Labs generation routed through the shared client/parser; no `snippet_followup` feature added (recommended for v1.17.3 along with richer snippet context)
+- See `PROJECT_NOTES.md` in the plugin repo for full file-by-file detail
 
 ### v1.17.1 — Evidence Intelligence Stabilization — ✓ DONE, ✓ COMMITTED (2026-07-01, plugin repo commit `8424862`)
 - Deepen Evidence panel no longer renders raw tool output (order IDs, error text, AS counts) to the store owner — replaced with a plain tool-count confirmation, matching the "AI input, not user-facing" architecture rule
@@ -269,22 +343,25 @@
 
 ## Pre-Release Blockers
 
-1. **License enforcement** — `WRNSM_License::is_valid()` is never called; hard blocker before selling
-2. **WRN Proxy API** — replace direct Anthropic key with WRN-managed proxy (usage caps per license tier); planned for v1.19.0
-3. **Landing page copy** — product page for webreadynow.com
+1. **License enforcement** — `WRNSM_License::is_valid()` is never called; scoped into v1.17.4, not yet implemented; hard blocker before selling
+2. **WRN Proxy API** — replace direct Anthropic key with WRN-managed proxy (usage caps per license tier); blocks Pro — Monthly and Pro — Managed; not required for Pro — Annual (BYOK)
+3. **Landing page copy** — product page for webreadynow.com; scope against the three Pro plans (Annual/Monthly/Managed), not a single flat offer
 4. **WRN Hub docs seeder** — needs full rewrite to reflect v1.15.0–1.17.0 features
+5. **Free plugin** — does not exist yet; separate repo and version track (own `v1.0.0`), required before any WordPress.org listing
+6. **Managed Monitoring SLA** — not yet defined; blocks Pro — Managed specifically
 
 ## Next Sprint Roadmap
 
-**Immediate next release: v1.17.2 — Centralized AI Plumbing and Safety Alignment.** Committed scope, not deferred/optional — see `PROJECT_NOTES.md` in the plugin repo for full detail. Triggered by a 2026-07-01 architecture audit that found 6 sibling AI classes with no shared core (7 independent Anthropic API call implementations, 6 drifting system prompts, 4 independent JSON parsers) and a live safety-posture conflict: `WRNSM_AI_Tools::run_db_query()` still allows AI-authored free-form SQL in the follow-up chat, contradicting the "AI never accesses the DB directly" rule that `WRNSM_Evidence_Tools` (v1.17.0) was built to enforce. Priority order: (1) retire/replace `run_db_query()`, (2) add `WRNSM_AI_Client` shared API-call layer, (3) add `WRNSM_AI_Response_Parser` shared JSON-salvage layer, (4) consistent task types (`priority_report`, `incident_summary`, `monitor_diagnosis`, `deep_diagnosis`, `snippet_generation`, `snippet_review`, `snippet_followup`) across AI Feedback and cost tracking, (5) feature-specific prompt building stays inside each feature class. Explicitly scoped as a small plumbing/safety pass — not a full AI rewrite, not a single merged prompt system. Code Labs snippet follow-up context is reviewed separately, inside v1.17.2 if scope allows or pushed to v1.17.3.
-
-**Do not move to v1.18.0 (Sprint B) until v1.17.2 is complete.** The AI centralization and `run_db_query()` safety alignment is a committed decision, not optional or deferred indefinitely.
+**v1.17.2 and v1.17.3 are both committed.** v1.17.4 (Pro Packaging and License Gating) is next and is the immediate blocker before any paid release — see `09-agent-outputs/product-alignment/wrn-store-monitor-free-pro-commercial-structure.md` for the full commercial decision. Do not move to v1.18.0 (Sprint B) without a fresh scoping pass; v1.18.0 stays scoped to Sprint B as already planned below unless that pass changes it. The Free WordPress.org plugin is a **separate repository and version track**, starting at its own `v1.0.0` — it does not consume Pro's version numbers.
 
 | Sprint | Version | Goal |
 |---|---|---|
-| — | v1.17.2 | Centralized AI Plumbing and Safety Alignment (see above) — next up, blocks v1.18.0 |
-| Sprint B | v1.18.0 | Evidence UX — gateway health panel, guided investigation wizard, timeline correlation, plugin conflict indicator, version checker |
-| Sprint C | v1.19.0 | Managed service handoff — escalation panel, evidence summary export, WRN Proxy AI, license gate |
+| — | v1.17.2 | Centralized AI Plumbing and Safety Alignment — ✓ committed |
+| — | v1.17.3 | Release Candidate Readiness & UX Positioning — ✓ committed |
+| — | v1.17.4 | Pro Packaging and License Gating — planned, next up |
+| Sprint B | v1.18.0 (Pro) | Evidence UX — gateway health panel, guided investigation wizard, timeline correlation, plugin conflict indicator, version checker |
+| Sprint C | v1.19.0 (Pro) | Managed service handoff — escalation panel, evidence summary export, WRN Proxy AI, unblocks Pro — Monthly and Pro — Managed |
+| — | v1.0.0 (Free, separate repo) | Standalone WordPress.org Free plugin — TODO, not yet scoped |
 
 ---
 

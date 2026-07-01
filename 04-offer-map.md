@@ -8,9 +8,10 @@
 
 | Offer | Type | Delivery | Current Status |
 |---|---|---|---|
-| WRN Store Monitor — Plugin only | Product | Self-serve | Active — pre-release |
-| WRN Store Monitor — Plugin + Setup | Productized service | Plugin + onboarding session | TODO — define scope |
-| WRN Store Monitor — Managed Monitoring | Recurring service | Plugin + human monthly review | TODO — define SLA |
+| WRN Store Monitor (Free) | Product | WordPress.org, self-serve | TODO — not yet built as standalone plugin |
+| WRN Store Monitor Pro — Annual | Product | webreadynow.com, self-serve, BYOK AI | Pre-release — first sellable SKU |
+| WRN Store Monitor Pro — Monthly | Product | webreadynow.com, self-serve, WRN-managed AI credits | Blocked — needs WRN Proxy API / AI metering |
+| WRN Store Monitor Pro — Managed | Recurring service | Pro plugin + WebReadyNow monthly review | Blocked — needs WRN Proxy API / AI metering + defined SLA |
 | WRN Pricing Rules Pro — Plugin only | Product | Self-serve | Active |
 | WRN Pricing Rules — Plugin + Setup | Productized service | Plugin + configuration | TODO — define scope |
 | WRN Pricing Rules — B2B Implementation | Service | Custom | Available |
@@ -26,34 +27,34 @@
 
 ## Products
 
-### WRN Store Monitor
+### WRN Store Monitor (Free) + WRN Store Monitor Pro
 
-**What it is:** WooCommerce monitoring and operational intelligence plugin.
+**What it is:** Two standalone plugins, not one plugin with a paywall.
+- **WRN Store Monitor (Free)** — WordPress.org. Basic WooCommerce detection and email alerting. No license key, no AI. Acquisition layer.
+- **WRN Store Monitor Pro** — webreadynow.com, license-gated via WRN Hub. Advanced monitoring, alert reliability, AI-assisted diagnosis, evidence tooling. Standalone — does not require Free to be installed. The current advanced codebase (v1.17.3) becomes Pro.
 
-**Current version:** 1.11.0
+**Current Pro version:** 1.17.3 (Free plugin not yet built — see `06-products/wrn-store-monitor.md`)
 
 **Offer models:**
-1. Plugin-only — self-serve purchase
-2. Plugin + Setup — plugin license plus configuration and onboarding
-3. Plugin + Managed Monitoring — plugin plus WebReadyNow monthly monitoring service
+1. Free plugin-only — self-serve, WordPress.org
+2. Pro — Annual (BYOK) — self-serve, first sellable SKU, no WRN AI infrastructure required
+3. Pro — Monthly (WRN-managed AI credits) — blocked until WRN Proxy API / AI metering exists
+4. Pro — Managed (WRN-managed AI credits + Managed WooCommerce Monitoring) — blocked until WRN Proxy API / AI metering AND a defined Managed Monitoring SLA both exist
 
 **Who buys it:**
-- WooCommerce store owners who want early warning on operational issues
-- Agencies managing WooCommerce stores for clients
-- Stores with meaningful revenue at risk from checkout or payment failures
+- WooCommerce store owners who want early warning on operational issues (Free entry point)
+- Agencies managing WooCommerce stores for clients (Pro)
+- Stores with meaningful revenue at risk from checkout or payment failures (Pro, especially Managed)
 
 **Key value:**
-- Detect failed orders, stuck orders, payment anomalies
-- Capture checkout errors in real time
-- Alert via email and Slack
-- AI-assisted triage (requires Anthropic API key)
-- Health score and operational dashboard
+- Free: detect failed/stuck orders, payment failure patterns, inventory issues, environment/HPOS/email-deliverability checks, health score, email alerts
+- Pro: adds continuous checkout/cart/AJAX probing, Slack alerting, alert reliability logging, incident timeline, diagnostic export, AI-assisted triage and diagnosis (BYOK or WRN-managed depending on plan), Code Lab
 
-**Primary CTA:** Install WRN Store Monitor / Get Managed Monitoring
+**Primary CTA:** Install WRN Store Monitor (Free) / Get WRN Store Monitor Pro — Annual / Get Managed Monitoring
 
-**Connects to service:** Managed WooCommerce Monitoring — when issues require diagnosis, root-cause repair, or ongoing expert support
+**Connects to service:** Managed WooCommerce Monitoring — wraps the Pro — Managed plan when issues require diagnosis, root-cause repair, or ongoing expert support
 
-Full details in `06-products/wrn-store-monitor.md`.
+Full details, feature split table, and commercial structure decision in `06-products/wrn-store-monitor.md` and `09-agent-outputs/product-alignment/wrn-store-monitor-free-pro-commercial-structure.md`.
 
 ---
 
@@ -152,14 +153,16 @@ Full details (when available) in `06-products/webreadynow-theme.md`.
 ## How Products and Services Connect
 
 ```
-Store owner discovers WRN Store Monitor
-    → Installs plugin (plugin-only)
-    → Sees an alert they can't diagnose
+Store owner discovers WRN Store Monitor (Free) on WordPress.org
+    → Installs Free plugin — basic detection and email alerts
+    → Sees an alert they can't diagnose, or wants advanced monitoring/AI
+    → Upgrades to WRN Store Monitor Pro — Annual (BYOK, self-serve, webreadynow.com)
+        → Later: Pro — Monthly or Pro — Managed once WRN Proxy API / AI metering exists
     → WebReadyNow offers: Store Audit or Managed Monitoring
         → Audit reveals deeper issues
         → Rescue or Integration engagement
         → Custom plugin if needed
-        → Managed Monitoring retainer
+        → Managed Monitoring retainer (Pro — Managed plan)
 ```
 
 ```

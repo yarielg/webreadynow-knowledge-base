@@ -46,12 +46,17 @@ Sprint 4 — Managed Service Layer — PLANNED
 - GitHub repo: TODO — create and link
 - Goal: every Claude session across every WebReadyNow project can orient from the same source of truth
 
-### Pre-Release Blockers (WRN Store Monitor)
-- License enforcement — `WRNSM_License::is_valid()` is never called; all features run without valid license
+### Commercial Structure Decided (2026-07-01)
+WRN Store Monitor splits into two standalone plugins: **WRN Store Monitor (Free)** on WordPress.org and **WRN Store Monitor Pro** on webreadynow.com (the current advanced codebase becomes Pro as-is). Pro sells under three plans: **Pro — Annual** (BYOK Anthropic key, first sellable SKU), **Pro — Monthly** and **Pro — Managed** (both blocked on WRN Proxy API / AI metering). Full decision record: `09-agent-outputs/product-alignment/wrn-store-monitor-free-pro-commercial-structure.md`. Full feature split and roadmap detail: `06-products/wrn-store-monitor.md`.
+
+### Pre-Release Blockers (WRN Store Monitor Pro)
+- License enforcement — `WRNSM_License::is_valid()` is never called; scoped into next version **v1.17.4 — Pro Packaging and License Gating**, not yet implemented
 - WRN Hub docs seeder rewrite — needs update for v1.10.0+ features
-- WRN Proxy API — replace direct Anthropic key with WRN-managed proxy
-- Landing page content — write webreadynow.com landing page copy for WRN Store Monitor
+- WRN Proxy API — replace direct Anthropic key with WRN-managed proxy; blocks Pro — Monthly and Pro — Managed only, not Pro — Annual
+- Landing page content — write webreadynow.com landing page copy, scoped against the three Pro plans
 - Pattern-based severity thresholds — needs documentation and review
+- Managed Monitoring SLA — not yet defined; blocks Pro — Managed specifically
+- Free plugin — does not exist yet; separate repo/version track, required before any WordPress.org listing
 
 ---
 
@@ -61,7 +66,7 @@ Sprint 4 — Managed Service Layer — PLANNED
 |---|---|
 | WRN Hub purpose and product definition | TODO |
 | WebReadyNow theme — internal only or sellable product? | TODO |
-| WRN Store Monitor pricing model | TODO |
+| WRN Store Monitor pricing model | **Resolved 2026-07-01** — Free/Pro structure + three Pro plans, see `09-agent-outputs/product-alignment/wrn-store-monitor-free-pro-commercial-structure.md`. Actual price points still TODO. |
 | GitHub repo for knowledge base | In progress |
 | webreadynow.com service pages — which to publish next | TODO |
 
